@@ -1,8 +1,11 @@
 package com.example.oakridge;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,9 +17,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUp extends AppCompatActivity {
 
@@ -29,9 +38,13 @@ public class SignUp extends AppCompatActivity {
     EditText password;
     Button register;
 
+    EditText phoneNumber;
+
     boolean isGuardian;
 
     FirebaseAuth fa;
+    FirebaseFirestore fStore;
+    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +60,8 @@ public class SignUp extends AppCompatActivity {
         register = findViewById(R.id.register);
         password = findViewById(R.id.password2);
         fa = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+        phoneNumber = findViewById(R.id.phone);
     }
 
     boolean isEmail(EditText text) {
@@ -78,15 +93,47 @@ public class SignUp extends AppCompatActivity {
         String n = name.getText().toString();
         String e = email.getText().toString();
         String psw = password.getText().toString();
+
+        String phone_number = phoneNumber.getText().toString();
             //Guardian g = new Guardian(n,e,psw);
             fa.createUserWithEmailAndPassword(e,psw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         Toast.makeText(SignUp.this, "You are successfully Registered", Toast.LENGTH_SHORT).show();
+                        userID = fa.getCurrentUser().getUid();
+                        DocumentReference doc = fStore.collection("users").document(userID);
+                        Map<String,Object> user = new HashMap<>();
+                        user.put("fName", n);
+                        user.put("fEmail", e);
+                        user.put("fPhoneNo", phone_number);
+                        if(isGuardian){
+                            user.put("status", "guardian");
+                        }else{
+                            user.put("status", "patient");
+                        }
+
+                        doc.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.d(TAG, "OnSuccess: user profile is created for " + userID);
+                            }
+                            DocumentReference userStatus = fStore.collection("users").document("status");
+
+                            if(userStatus.get().equals("guardians")) {
+                                Intent myIntent = new Intent(v.getContext(),family_code_guardian.class);
+                                startActivityForResult(myIntent, 0);
+                            }else{
+                                Intent myIntent = new Intent(v.getContext(),family_code_guardian.class);
+                                startActivityForResult(myIntent, 0);
+                            }
+                        });
                     } else {
                         Toast.makeText(SignUp.this, "You are not Registered! Try again", Toast.LENGTH_SHORT).show();
                     }
+
+                    Intent myIntent = new Intent(v.getContext(), Login_Activity.class);
+                    startActivityForResult(myIntent, 0);
                 }
             });
             //Patient p = new Patient(n,e,psw)

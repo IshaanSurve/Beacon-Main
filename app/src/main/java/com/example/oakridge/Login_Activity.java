@@ -16,10 +16,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Login_Activity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +56,7 @@ public class Login_Activity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Account exists and password is correct
                             Log.d("LOGIN", "Successful login");
+
                         } else {
                             // Account does not exist or password is incorrect
                             Log.d("LOGIN", "Failed login");

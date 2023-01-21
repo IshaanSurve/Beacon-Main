@@ -1,6 +1,5 @@
 package com.example.oakridge;
 
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,12 +12,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.LocationManager;
-//import android.location.LocationRequest;
 import android.os.Build;
 import android.os.Bundle;
 
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -37,12 +38,18 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 
 public class Location_Activity extends AppCompatActivity {
 
-    private TextView AddressText;
-    private Button LocationButton;
+    private TextView textAddress;
+    private Button button;
     private LocationRequest locationRequest;
+    Geocoder geocoder;
+    List<Address> addresses;
 
 
     @Override
@@ -50,15 +57,17 @@ public class Location_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
-        AddressText = findViewById(R.id.addressText);
-        LocationButton = findViewById(R.id.locationButton);
+        textAddress = findViewById(R.id.addressText);
+        button = findViewById(R.id.locationButton);
+        geocoder = new Geocoder(this, Locale.getDefault());
+
 
         locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(5000);
         locationRequest.setFastestInterval(2000);
 
-        LocationButton.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -81,7 +90,6 @@ public class Location_Activity extends AppCompatActivity {
                     getCurrentLocation();
 
                 }else {
-
                     turnOnGPS();
                 }
             }
@@ -125,7 +133,24 @@ public class Location_Activity extends AppCompatActivity {
                                         double latitude = locationResult.getLocations().get(index).getLatitude();
                                         double longitude = locationResult.getLocations().get(index).getLongitude();
 
-                                        AddressText.setText("Latitude: "+ latitude + "\n" + "Longitude: "+ longitude);
+                                        try {
+                                            addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                                        } catch (IOException e) {
+                                            throw new RuntimeException(e);
+                                        }
+
+                                        String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                                        String city = addresses.get(0).getLocality();
+                                        String state = addresses.get(0).getAdminArea();
+                                        String country = addresses.get(0).getCountryName();
+                                        String postalCode = addresses.get(0).getPostalCode();
+                                        String knownName = addresses.get(0).getFeatureName();
+
+                                        String finalAddress = address + ", " + city + ", " + state + ", " + country + ", " + postalCode + ", near"
+                                                + knownName;
+
+                                        Log.d("Address", finalAddress);
+                                        textAddress.setText(finalAddress);
                                     }
                                 }
                             }, Looper.getMainLooper());
