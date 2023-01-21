@@ -24,7 +24,7 @@ public class Login_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
     }
 
-    public void signIn() {
+    public void signIn(View v) {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("server/saving-data/fireblog");
         EditText nameField = findViewById(R.id.Name);
@@ -53,16 +53,10 @@ public class Login_Activity extends AppCompatActivity {
                 });
     }
 
-    public void signInAsPatient(View v){
-        signIn();
-        Intent myIntent = new Intent(v.getContext(), family_code.class);
-        startActivityForResult(myIntent, 0);
+    public void register(View v){
+
     }
 
-    public void signInAsGuardian(View v){
-        signIn();
-        Intent myIntent = new Intent(v.getContext(), family_code_guardian.class);
-        startActivityForResult(myIntent, 0);
-    }
+
 }
 
