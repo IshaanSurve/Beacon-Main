@@ -16,10 +16,12 @@ public class SignUp extends AppCompatActivity {
     EditText name;
    // EditText lastName;
 
-    CheckBox Patient;
+    //CheckBox Patient;
     CheckBox Guardian;
     EditText email;
     Button register;
+
+    boolean isGuardian;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +31,8 @@ public class SignUp extends AppCompatActivity {
         name = findViewById(R.id.Name);
         //lastName = findViewById(R.id.lastName);
         Guardian = findViewById(R.id.guardian);
-        Patient = findViewById(R.id.patient);
+
+       // Patient = findViewById(R.id.patient);
         email = findViewById(R.id.email);
         register = findViewById(R.id.register);
 
@@ -60,6 +63,12 @@ public class SignUp extends AppCompatActivity {
         if (isEmail(email) == false) {
             email.setError("Enter valid email!");
         }
+    }
 
+    public void register(View v){
+        isGuardian = Guardian.isChecked();
+        if(isGuardian){
+            //Guardian g = new Guardian();
+        }
     }
 }
