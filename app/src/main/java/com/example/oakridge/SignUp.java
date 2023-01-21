@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -69,7 +70,9 @@ public class SignUp extends AppCompatActivity {
         }
     }
 
-    public void register(View v){
+    public void signIn(View v){
+
+        Log.d("Working", "YES");
         checkDataEntered();
         isGuardian = Guardian.isChecked();
         String n = name.getText().toString();
@@ -88,4 +91,6 @@ public class SignUp extends AppCompatActivity {
             });
             //Patient p = new Patient(n,e,psw)
     }
+
+
 }
