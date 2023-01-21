@@ -4,6 +4,8 @@ package com.example.oakridge;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -23,10 +25,14 @@ public class Medical_Repository extends AppCompatActivity {
     public FirebaseFirestore fStore = FirebaseFirestore.getInstance();
     String userID;
 
+    public TextView info;
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.medical_questions_patients);
+        info = findViewById(R.id.Medical_Info);
     }
 
     public void onClickUserMedicalInfo(View v) {
@@ -65,7 +71,23 @@ public class Medical_Repository extends AppCompatActivity {
 
             }
         });
+
+
     }
-
-
+    public void outputAll(View v){
+        DocumentReference doc = fStore.collection("users").document(userID);
+        doc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Map<String, Object> user = document.getData();
+                        String medical_info = "Patient Name: " +  user.get("fName") + "\n Patient Age" + user.get("fAge") + "\n Patient Weight" +  user.get("fWeight") + "\n Patient Height" + user.get("fHeight") + "\n Allergies: " + user.get("fAllergies") + "\n Extra Information" + user.get("fAdditionalInfo");
+                        info.setText(medical_info);
+                    }
+                }
+    }
+});
+    }
 }

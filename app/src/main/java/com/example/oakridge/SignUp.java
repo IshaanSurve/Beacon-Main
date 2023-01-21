@@ -5,13 +5,13 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -32,7 +32,7 @@ public class SignUp extends AppCompatActivity {
    // EditText lastName;
 
     //CheckBox Patient;
-    CheckBox Guardian;
+   // CheckBox Guardian;
     EditText email;
     EditText password;
     Button register;
@@ -53,7 +53,7 @@ public class SignUp extends AppCompatActivity {
 
         name = findViewById(R.id.Name);
         //lastName = findViewById(R.id.lastName);
-        Guardian = findViewById(R.id.guardian);
+        //Guardian = findViewById(R.id.guardian);
 
        // Patient = findViewById(R.id.patient);
         email = findViewById(R.id.email);
@@ -89,44 +89,53 @@ public class SignUp extends AppCompatActivity {
 
         Log.d("Working", "YES");
         checkDataEntered();
-        isGuardian = Guardian.isChecked();
+       // isGuardian = Guardian.isChecked();
         String n = name.getText().toString();
         String e = email.getText().toString();
         String psw = password.getText().toString();
 
         String phone_number = phoneNumber.getText().toString();
             //Guardian g = new Guardian(n,e,psw);
-            fa.createUserWithEmailAndPassword(e,psw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(SignUp.this, "You are successfully Registered", Toast.LENGTH_SHORT).show();
-                        userID = fa.getCurrentUser().getUid();
-                        DocumentReference doc = fStore.collection("users").document(userID);
-                        Map<String,Object> user = new HashMap<>();
-                        UID.set(userID);
-                        user.put("fName", n);
-                        user.put("fEmail", e);
-                        user.put("fPhoneNo", phone_number);
-                        user.put("fAllergies", "");
-                        user.put("fHeight","0");
-                        user.put("fWeight", 0);
-                        user.put("fAdditionalInfo", "");
-                        user.put("fAge", "0");
-                        doc.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Log.d(TAG, "OnSuccess: user profile is created for " + userID);
-                            }
-                            //DocumentReference userStatus = fStore.collection("users").document("status");
+
+            if(e != null && psw != null) {
+                fa.createUserWithEmailAndPassword(e, psw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(SignUp.this, "You are successfully Registered", Toast.LENGTH_SHORT).show();
+                            userID = fa.getCurrentUser().getUid();
+                            DocumentReference doc = fStore.collection("users").document(userID);
+                            Map<String, Object> user = new HashMap<>();
+                            UID.set(userID);
+                            user.put("fName", n);
+                            user.put("fEmail", e);
+                            user.put("fPhoneNo", phone_number);
+                            user.put("fAllergies", "");
+                            user.put("fHeight", "0");
+                            user.put("fWeight", 0);
+                            user.put("fAdditionalInfo", "");
+                            user.put("fAge", "0");
+                            doc.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Log.d(TAG, "OnSuccess: user profile is created for " + userID);
+                                }
 
 
-                        });
-                    } else {
-                        Toast.makeText(SignUp.this, "You are not Registered! Try again", Toast.LENGTH_SHORT).show();
+                                //DocumentReference userStatus = fStore.collection("users").document("status");
+
+
+                            });
+
+                        } else {
+                            Toast.makeText(SignUp.this, "You are not Registered! Try again", Toast.LENGTH_SHORT).show();
+                        }
+
+                        Intent myIntent = new Intent(v.getContext(), Dementia_Home.class);
+                        startActivityForResult(myIntent, 0);
                     }
-                }
-            });
+                });
+            }
             //Patient p = new Patient(n,e,psw)
     }
 

@@ -14,15 +14,11 @@ public class Dementia_Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_page_patient);
-        call = findViewById(R.id.button12);
+        //call = findViewById(R.id.button12);
+    }
 
-        call.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:12345678"));
-                startActivity(intent);
-            }
-        });
+    public void openMental(View v){
+        Intent myIntent = new Intent(v.getContext(), progressbarshi.class);
+        startActivityForResult(myIntent, 0);
     }
 }
