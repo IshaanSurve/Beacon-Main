@@ -2,12 +2,17 @@ package com.example.oakridge;
 
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -17,13 +22,14 @@ public class Medical_Repository extends AppCompatActivity {
 
     public FirebaseFirestore fStore = FirebaseFirestore.getInstance();
     String userID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.medical_questions_patients);
     }
 
-    public void onClickUserMedicalInfo(View v){
+    public void onClickUserMedicalInfo(View v) {
 
         userID = UID.getId();
         EditText nameField = findViewById(R.id.Name);
@@ -41,8 +47,25 @@ public class Medical_Repository extends AppCompatActivity {
         String Other = otherField.toString();
 
         DocumentReference doc = fStore.collection("users").document(userID);
+        doc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Map<String, Object> user = document.getData();
+                        user.put("fAllergies", Allergies);
+                        user.put("fWeight", Weight);
+                        user.put("fAge", Age);
+                        user.put("fHeight", Height);
+                        user.put("fName", Name);
+                        user.put("fAdditionalInfo", Other);
+                    }
+                }
 
-
-
+            }
+        });
     }
+
+
 }

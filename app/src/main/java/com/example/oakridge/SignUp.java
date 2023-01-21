@@ -108,11 +108,11 @@ public class SignUp extends AppCompatActivity {
                         user.put("fName", n);
                         user.put("fEmail", e);
                         user.put("fPhoneNo", phone_number);
-                        user.put("Allergies", "");
-                        user.put("Height","0");
-                        user.put("Weight", 0);
-                        user.put("AdditionalInfo", "");
-                        user.put("Age", "0");
+                        user.put("fAllergies", "");
+                        user.put("fHeight","0");
+                        user.put("fWeight", 0);
+                        user.put("fAdditionalInfo", "");
+                        user.put("fAge", "0");
                         doc.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
