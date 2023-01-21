@@ -13,15 +13,22 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Login_Activity extends AppCompatActivity {
 
+    private FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        if(currentUser != null){
+            this.recreate();
+        }
     }
 
     public void signIn(View v) {
@@ -36,7 +43,7 @@ public class Login_Activity extends AppCompatActivity {
         String password = passwordField.getText().toString();
        // int phoneNumber = Integer.parseInt(phoneNumberField.getText().toString());
 
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
         Log.d("Info", "done");
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
