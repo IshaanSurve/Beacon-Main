@@ -5,7 +5,6 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -39,8 +38,9 @@ public class SignUp extends AppCompatActivity {
     Button register;
 
     EditText phoneNumber;
-
     boolean isGuardian;
+
+    //boolean isGuardian;
 
     FirebaseAuth fa;
     FirebaseFirestore fStore;
@@ -104,36 +104,27 @@ public class SignUp extends AppCompatActivity {
                         userID = fa.getCurrentUser().getUid();
                         DocumentReference doc = fStore.collection("users").document(userID);
                         Map<String,Object> user = new HashMap<>();
+                        UID.set(userID);
                         user.put("fName", n);
                         user.put("fEmail", e);
                         user.put("fPhoneNo", phone_number);
-                        if(isGuardian){
-                            user.put("status", "guardian");
-                        }else{
-                            user.put("status", "patient");
-                        }
-
+                        user.put("Allergies", "");
+                        user.put("Height","0");
+                        user.put("Weight", 0);
+                        user.put("AdditionalInfo", "");
+                        user.put("Age", "0");
                         doc.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
                                 Log.d(TAG, "OnSuccess: user profile is created for " + userID);
                             }
-                            DocumentReference userStatus = fStore.collection("users").document("status");
+                            //DocumentReference userStatus = fStore.collection("users").document("status");
 
-                            if(userStatus.get().equals("guardians")) {
-                                Intent myIntent = new Intent(v.getContext(),family_code_guardian.class);
-                                startActivityForResult(myIntent, 0);
-                            }else{
-                                Intent myIntent = new Intent(v.getContext(),family_code_guardian.class);
-                                startActivityForResult(myIntent, 0);
-                            }
+
                         });
                     } else {
                         Toast.makeText(SignUp.this, "You are not Registered! Try again", Toast.LENGTH_SHORT).show();
                     }
-
-                    Intent myIntent = new Intent(v.getContext(), Login_Activity.class);
-                    startActivityForResult(myIntent, 0);
                 }
             });
             //Patient p = new Patient(n,e,psw)

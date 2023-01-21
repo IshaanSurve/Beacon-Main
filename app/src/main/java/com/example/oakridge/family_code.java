@@ -11,4 +11,6 @@ public class family_code extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.family_code);
     }
+
+
 }

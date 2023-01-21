@@ -55,10 +55,10 @@ public class Location_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_location);
+        setContentView(R.layout.location_guardian);
 
-        textAddress = findViewById(R.id.addressText);
-        button = findViewById(R.id.locationButton);
+        textAddress = findViewById(R.id.AddressResult);
+        button = findViewById(R.id.find);
         geocoder = new Geocoder(this, Locale.getDefault());
 
 
