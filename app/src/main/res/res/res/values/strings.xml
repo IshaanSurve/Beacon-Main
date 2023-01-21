@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">Beacon</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="todo">TODO</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="register_as_guardian">Register as guardian</string>
+    <string name="register_as_patient">Register As Patient</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="login">Login</string>
+    <string name="welcome_to_the_beacon_family">Welcome To The Beacon Family!</string>
+    <string name="logo">Logo</string>
+    <string name="as_patient">as patient</string>
+    <string name="as_guardian">as GUARDIAN</string>
+    <string name="get_access">Get Access!</string>
+    <string name="disclaimer_a_family_can_only_be_created_by_a_guardian_you_are_advised_to_request_your_guardian_to_make_a_family_for_you_to_get_access_to_the_entirity_of_our_features">Disclaimer - A family can only be created by a guardian, you are advised to request your guardian to make a family for you to get access to the entirity of our features</string>
+    <string name="just_one_more_step">Just One More Step :)</string>
+    <string name="you_re_almost_there">You\'re Almost There!</string>
+    <string name="enter">Enter</string>
+    <string name="button">Button</string>
+    <string name="HelpingHandImg">TODO</string>
+    <string name="enter_family_code">Enter Family Code</string>
+    <string name="code">Code</string>
+    <string name="back">Back</string>
+    <string name="EnterCode">Enter</string>
+    <string name="additional_information">Additional Information</string>
+    <string name="allergies">Allergies</string>
+    <string name="name">Name</string>
+    <string name="age">Age</string>
+    <string name="height">Height</string>
+    <string name="weight">Weight</string>
+    <string name="incase_of_a_medical_emergency_we_maintain_medical_reports_of_our_users">Incase Of A Medical Emergency We Maintain Medical Reports Of Our Users!</string>
+    <string name="medical_questionnaire">Medical Questionnaire</string>
+    <string name="submit">Submit</string>
+</resources>
