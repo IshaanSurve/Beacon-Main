@@ -43,7 +43,7 @@ public class Dementia_Home extends AppCompatActivity {
 
     public void openChat(View v){
         //Intent myIntent = new Intent(v.getContext(), MainActivityMessaging.class);
-        //startActivityForResult(myIntent, 0);
+        //  startActivityForResult(myIntent, 0);
     }
 
     public void openRemainder(View v){
