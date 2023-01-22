@@ -11,7 +11,7 @@ public class QuoteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.quotes_page);
 
         TextView quote_text = findViewById(R.id.text_quote);
 
@@ -20,7 +20,7 @@ public class QuoteActivity extends AppCompatActivity {
         executorService.execute(new Runnable() {
             @Override
             public void run() {
-                com.example.quotes2.Quote quote = com.example.quotes2.JsonReader.convertJSONToObject(QuoteActivity.this);
+                com.example.quotes2.Quote quote = JsonReader.convertJSONToObject(QuoteActivity.this);
 
                 runOnUiThread(new Runnable() {
                     @Override

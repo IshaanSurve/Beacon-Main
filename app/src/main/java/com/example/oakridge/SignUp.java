@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -51,7 +52,7 @@ public class SignUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup);
 
-        name = findViewById(R.id.Name);
+        //name = findViewById(R.id.name);
         //lastName = findViewById(R.id.lastName);
         //Guardian = findViewById(R.id.guardian);
 
@@ -75,10 +76,6 @@ public class SignUp extends AppCompatActivity {
     }
 
     void checkDataEntered() {
-        if (isEmpty(name)) {
-            Toast t = Toast.makeText(this, "You must enter name to register!", Toast.LENGTH_SHORT);
-            t.show();
-        }
 
         if (isEmail(email) == false) {
             email.setError("Enter valid email!");
@@ -90,7 +87,7 @@ public class SignUp extends AppCompatActivity {
         Log.d("Working", "YES");
         checkDataEntered();
        // isGuardian = Guardian.isChecked();
-        String n = name.getText().toString();
+//        String n = name.getText().toString();
         String e = email.getText().toString();
         String psw = password.getText().toString();
 
@@ -98,16 +95,17 @@ public class SignUp extends AppCompatActivity {
             //Guardian g = new Guardian(n,e,psw);
 
             if(e != null && psw != null) {
-                fa.createUserWithEmailAndPassword(e, psw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                fa.createUserWithEmailAndPassword(e, psw).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(SignUp.this, "You are successfully Registered", Toast.LENGTH_SHORT).show();
-                            userID = fa.getCurrentUser().getUid();
+                            FirebaseUser currUser = fa.getCurrentUser();
+                            userID = currUser.getUid();
                             DocumentReference doc = fStore.collection("users").document(userID);
                             Map<String, Object> user = new HashMap<>();
                             UID.set(userID);
-                            user.put("fName", n);
+                            //user.put("fName", n);
                             user.put("fEmail", e);
                             user.put("fPhoneNo", phone_number);
                             user.put("fAllergies", "");

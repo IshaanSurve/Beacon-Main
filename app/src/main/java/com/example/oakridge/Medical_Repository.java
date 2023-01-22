@@ -38,7 +38,7 @@ public class Medical_Repository extends AppCompatActivity {
     public void onClickUserMedicalInfo(View v) {
 
         userID = UID.getId();
-        EditText nameField = findViewById(R.id.Name);
+        EditText nameField = findViewById(R.id.name);
         EditText ageField = findViewById(R.id.age);
         EditText allergiesField = findViewById(R.id.allergiesinput);
         EditText heightField = findViewById(R.id.height);

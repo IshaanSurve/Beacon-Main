@@ -1,11 +1,10 @@
-package com.example.quotes2;
+package com.example.oakridge;
 
 import android.content.Context;
 
 import com.example.oakridge.R;
 import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.google.gson.*;
 
 import java.io.IOException;
 import java.io.InputStream;
