@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import com.example.oakridge.Quote;
 
 public class QuoteActivity extends AppCompatActivity {
 
@@ -17,18 +18,18 @@ public class QuoteActivity extends AppCompatActivity {
 
         ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                com.example.quotes2.Quote quote = JsonReader.convertJSONToObject(QuoteActivity.this);
+       // executorService.execute(new Runnable() {
+           // @Override
+           // public void run() {
+                //Quote quote = JsonReader.convertJSONToObject(QuoteActivity.this);
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        quote_text.setText(quote.getQuote());
-                    }
-                });
-            }
-        });
+                //runOnUiThread(new Runnable() {
+                   // @Override
+                    //public void run() {
+                        //quote_text.setText(quote.getQuote());
+                    //}
+               // });
+           // }
+     //   });
     }
 }

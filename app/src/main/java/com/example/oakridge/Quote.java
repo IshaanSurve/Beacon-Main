@@ -1,4 +1,4 @@
-package com.example.quotes2;
+package com.example.oakridge;
 
 public class Quote {
 

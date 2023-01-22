@@ -23,7 +23,7 @@ public class SOS_MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:123456789"));
+                intent.setData(Uri.parse("tel:103"));
                 // need to put guardian number
                 startActivity(intent);
             }

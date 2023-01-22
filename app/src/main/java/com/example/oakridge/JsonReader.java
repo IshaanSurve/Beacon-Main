@@ -8,10 +8,11 @@ import com.google.gson.*;
 
 import java.io.IOException;
 import java.io.InputStream;
+import com.example.oakridge.Quote;
 
 public class JsonReader {
 
-    public static com.example.quotes2.Quote convertJSONToObject(Context context) {
+    public static Quote convertJSONToObject(Context context) {
         InputStream inputStream = context.getResources().openRawResource(R.raw.quotes);
 
         String jsonString = "";
@@ -25,7 +26,7 @@ public class JsonReader {
             e.printStackTrace();
         }
 
-        return new Gson().fromJson(jsonString, new TypeToken<com.example.quotes2.Quote>(){}.getType());
+       return new Gson().fromJson(jsonString, new TypeToken<Quote>(){}.getType());
     }
 
 }

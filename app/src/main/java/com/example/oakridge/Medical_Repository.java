@@ -7,12 +7,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,6 +26,7 @@ import java.util.Map;
 public class Medical_Repository extends AppCompatActivity {
 
     public FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+    public FirebaseAuth fa = FirebaseAuth.getInstance();
     String userID;
 
     public TextView info;
@@ -36,8 +40,8 @@ public class Medical_Repository extends AppCompatActivity {
     }
 
     public void onClickUserMedicalInfo(View v) {
-
-        userID = UID.getId();
+        FirebaseUser currUser = fa.getCurrentUser();
+        userID = currUser.getUid();
         EditText nameField = findViewById(R.id.name);
         EditText ageField = findViewById(R.id.age);
         EditText allergiesField = findViewById(R.id.allergiesinput);
@@ -56,7 +60,10 @@ public class Medical_Repository extends AppCompatActivity {
         doc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                Log.d("Success", "YES");
                 if (task.isSuccessful()) {
+                    //Log.d("Again", "YES");
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         Map<String, Object> user = document.getData();
