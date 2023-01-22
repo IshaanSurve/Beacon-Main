@@ -31,7 +31,7 @@ public class Medical_Repository extends AppCompatActivity {
 
     public TextView info;
 
-    @SuppressLint("MissingInflatedId")
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
